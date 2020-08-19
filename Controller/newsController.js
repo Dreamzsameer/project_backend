@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const Product = require("../Model/productModal");
+const News = require("../Model/newsModal");
 
 let dateob = new Date();
 let date = ("0" + dateob.getDate()).slice(-2);
@@ -10,70 +10,49 @@ var currenttime = year + "-" + month + "-" + date;
 
 router.post("/add", (req, res) => {
   console.log(req.body);
-  const product = new Product({
-    productname: req.body.productname,
-    brand: req.body.brand,
-    price: req.body.price,
-    date: currenttime,
-    description: req.body.description,
-    warrenty: req.body.warrenty,
+  const news = new News({
+    heading: req.body.heading,
     image: req.body.image,
+    description: req.body.description,
+    date: currenttime,
   });
 
-  product
+  news
     .save()
     .then((result) => {
       res.status(201).json({
-        message: "Product added successfully",
+        message: "news added successfully",
       });
     })
     .catch((err) => {
       console.log(err);
       res.status(500).json({
-        message: "Error adding product",
+        message: "Error adding news",
       });
     });
 });
 
 router.get("/get", (req, res) => {
-  Product.find()
+  News.find()
     .then(function (data) {
       res.send(data);
     })
     .catch((err) => {
       res.status(500).json({
-        message: "Error displaying product",
+        message: "Error displaying news",
       });
     });
-});
-
-router.get("/get/:id", (req, res) => {
-  pid = req.params.id.toString();
-  Product.findById(pid)
-    .then((data) => {
-      res.send(data);
-    })
-    .catch((err) => {
-      res.send(err);
-    });
-});
-
-router.put("/update", (req, res) => {
-  console.log(req.body);
-  Product.findByIdAndUpdate(req.body.id, req.body, { new: true }, () => {
-    res.send("Product updated");
-  });
 });
 
 router.delete("/delete/:id", (req, res) => {
   Product.findByIdAndDelete(req.params.id)
     .then(() => {
-      console.log("Product removed");
+      console.log("news removed");
       res.send(true);
     })
     .catch(() => {
       res.status(500).json({
-        message: "Error deleting product",
+        message: "Error deleting news",
       });
     });
 });

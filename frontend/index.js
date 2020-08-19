@@ -75,7 +75,7 @@ $(document).ready(function () {
         productname: name,
         brand: brand,
         price: price,
-        desc: desc,
+        description: desc,
         warrenty: warrenty,
         image: img,
       },
@@ -92,8 +92,8 @@ $(document).ready(function () {
     });
   });
   $("#btn_order").click(function (e) {
-    userid = $("#user_id").val();
-    productid = $("#product_id").val();
+    userid = $("#ouser_id").val();
+    productid = $("#oproduct_id").val();
 
     $.ajax({
       url: "http://localhost:8080/order/add",

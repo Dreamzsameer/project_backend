@@ -20,6 +20,7 @@ const productRoute = require("./Controller/productController");
 const feedbackRoute = require("./Controller/feedbackController");
 const cartRoute = require("./Controller/cartController");
 const orderRoute = require("./Controller/orderController");
+const newsRoute = require("./Controller/newsController");
 
 app.use("/upload", fileUploadRoute);
 app.use("/user", userRoute);
@@ -27,5 +28,6 @@ app.use("/product", productRoute);
 app.use("/feedback", feedbackRoute);
 app.use("/cart", cartRoute);
 app.use("/order", orderRoute);
+app.use("/news", newsRoute);
 
 module.exports = app;
