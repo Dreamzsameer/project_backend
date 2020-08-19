@@ -9,7 +9,7 @@ router.post("/register", (req, res) => {
     .exec()
     .then((userData) => {
       if (userData.length >= 1) {
-        res.status(201).json({ message: "Email already exists" });
+        res.status(200).json({ message: "Email already exists" });
       } else {
         const user = new User({
           fullname: req.body.fullname,
@@ -22,7 +22,7 @@ router.post("/register", (req, res) => {
         user
           .save()
           .then((success) => {
-            res.status(200).json({
+            res.status(201).json({
               success:true
             });
           })
