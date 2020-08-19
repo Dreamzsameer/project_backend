@@ -1,4 +1,31 @@
 $(document).ready(function () {
+  var selectedImage = $("#img");
+  var ImageName;
+  $("#img").change(() => {
+    sendImage(selectedImage);
+  });
+
+  function sendImage(selectedImage) {
+    var form_data = new FormData();
+    let files = selectedImage.get(0).files;
+    form_data.append("image", files[0]);
+
+    $.ajax({
+      type: "POST",
+      url: "http://localhost:8080/product/upload",
+      contentType: false,
+      cache: false,
+      processData: false,
+      data: form_data,
+      success: function (data) {
+        ImageName = JSON.parse(data);
+      },
+      error: function (xhr, textStatus, errorThrown) {
+        console.log("Error in Operation");
+      },
+    });
+  }
+
   $("#btn_register").click(function (e) {
     name = $("#name").val();
     email = $("#email").val();
@@ -89,7 +116,6 @@ $(document).ready(function () {
     price = $("#price").val();
     desc = $("#desc").val();
     warrenty = $("#warrenty").val();
-    img = $("#img").val();
 
     $.ajax({
       url: "http://localhost:8080/product/add",
@@ -101,7 +127,6 @@ $(document).ready(function () {
         price: price,
         description: desc,
         warrenty: warrenty,
-        image: img,
       },
       success: function (res, textStatus, xhr) {
         if (res.message == true) {
