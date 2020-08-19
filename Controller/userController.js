@@ -50,7 +50,7 @@ router.post("/login", function (req, res) {
         //   mobile: result.mobile,
         //   address: result.address,
         // };
-        res.status(201).json([
+        res.status(201).json(
           {
             _id: result._id,
             fullname: result.fullname,
@@ -58,7 +58,7 @@ router.post("/login", function (req, res) {
             mobile: result.mobile,
             address: result.address,
           },
-        ]);
+        );
       } else {
         res.status(500).json({
           message: "Invalid Login",
