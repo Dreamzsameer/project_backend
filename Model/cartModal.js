@@ -1,10 +1,19 @@
 const mongoose = require("mongoose");
+const { strict } = require("assert");
 const Schema = mongoose.Schema;
 
 const cartSchema = new Schema({
-  user: { type: Schema.Types.ObjectId, ref: "User" },
-  product: { type: Schema.Types.ObjectId, ref: "Product" },
-});
+  userid: String,
+  productname: String,
+  fullname: String,
+  email: String,
+  address: String,
+  mobile: String,
+  image:String,
+  price:Number,
+  
+
+}, {strict:false});
 
 const Cart = mongoose.model("Cart", cartSchema);
 module.exports = Cart;

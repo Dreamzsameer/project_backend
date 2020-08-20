@@ -1,11 +1,24 @@
 const express = require("express");
 const router = express.Router();
 const Cart = require("../Model/cartModal");
+const { request } = require("http");
 
 router.post("/add", (req, res) => {
+  console.log(req.body)
+
   const cart = new Cart({
-    user: req.body.userid,
-    product: req.body.productid,
+    // user: req.body.userid,
+    // product: req.body.productid,
+
+    userid: req.body.userid,
+    productid: req.body.productid,
+    productname: req.body.productname,
+    fullname: req.body.fullname,
+    email: req.body.email,
+    address: req.body.address,
+    mobile: req.body.mobile,
+    price: req.body.price,
+    image: req.body.image
   });
 
   cart
@@ -36,26 +49,12 @@ router.get("/get", (req, res) => {
 });
 
 router.get("/get/:userid", (req, res) => {
-  var cartdetails = [];
   userid = req.params.userid.toString();
-  Cart.find({ user: userid })
-    .populate("user")
-    .populate("product")
+  Cart.find({ userid: userid })
+
     .then((data) => {
-      data.forEach((element) => {
-        console.log(element);
-        cartdetails.push({
-          userid: element.user._id,
-          productid: element.product._id,
-          productname: element.product.productname,
-          image: element.product.image,
-          fullname: element.user.fullname,
-          email: element.user.email,
-          address: element.user.address,
-          mobile: element.user.mobile,
-        });
-      });
-      res.send(cartdetails);
+
+      res.status(200).send(data);
     })
     .catch((err) => {
       res.status(500).json({
@@ -63,8 +62,10 @@ router.get("/get/:userid", (req, res) => {
       });
     });
 });
-router.delete("/delete/:cartid", (req, res) => {
-  Cart.findByIdAndDelete(req.params.cartid)
+router.delete("/delete/:id", (req, res) => {
+  Cart.findOneAndRemove({
+    _id: req.params.id.toString()
+  })
     .then(() => {
       res.status(201).json({
         message: "cart removed",

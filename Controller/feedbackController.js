@@ -2,39 +2,19 @@ const express = require("express");
 const router = express.Router();
 const Feedback = require("../Model/feedbackModal");
 
-router.post("/:uid/:pid", (req, res) => {
-  const feedback = new Feedback({
-    userid: req.params.uid,
-    product_id: req.params.pid,
-    amount: req.body.amount,
-  });
 
-  feedback
-    .save()
-    .then((result) => {
-      res.status(201).json({
-        message: "Feedback sent",
-      });
-    })
-    .catch((err) => {
-      console.log(err);
-      res.status(500).json({
-        message: "Error sending feedback",
-      });
-    });
-});
 router.post("/add", async (req, res) => {
   const feedback = new Feedback({
-    user: req.body.userid,
-    product: req.body.productid,
     feedback: req.body.feedback,
     rating: req.body.rating,
+    username:req.body.username,
+    productid: req.body.productid
   });
 
   feedback
     .save()
     .then((result) => {
-      res.status(201).json({
+      res.status(200).json({
         message: "Feedback registered.",
       });
     })
@@ -66,22 +46,11 @@ router.get("/get", (req, res) => {
 });
 
 router.get("/get/:productid", (req, res) => {
-  p_id = req.params.productid.toString();
-  var returnData = [];
-  Feedback.find({ product: p_id })
-    .populate("user")
-    .populate("product")
-    .then(function (data) {
-      data.forEach((element) => {
-        returnData.push({
-          id: data._id,
-          fullname: element.user.fullname,
-          feedback: element.feedback,
-          rating: element.rating,
-        });
-      });
+  productid = req.params.productid.toString();
 
-      res.send(returnData);
+  Feedback.find({ productid: productid })
+    .then(function (data) {
+      res.status(200).send(data);
     })
     .catch((err) => {
       console.log(err);

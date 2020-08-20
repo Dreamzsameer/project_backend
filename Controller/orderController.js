@@ -4,15 +4,17 @@ const Order = require("../Model/orderModal");
 
 router.post("/add", (req, res) => {
   const order = new Order({
-    user: req.body.userid,
-    product: req.body.productid,
+    userid: req.body.userid,
+    productname: req.body.productname,
+    price:req.body.price,
+    image:req.body.image,
     payment: false,
   });
   console.log(order);
   order
     .save()
     .then((result) => {
-      res.status(201).json({
+      res.status(200).json({
         message: "order successfully",
       });
     })
@@ -25,21 +27,13 @@ router.post("/add", (req, res) => {
 });
 
 router.get("/get/:userid", (req, res) => {
-  var orderdetails = [];
-  id = req.params.userid.toString();
-  Order.find({ user: id })
+  userid = req.params.userid.toString();
+  Order.find({ userid: userid })
     .populate("product")
     .then((data) => {
-      console.log(data);
-      data.forEach((element) => {
-        orderdetails.push({
-          orderid: element._id,
-          productname: element.product.productname,
-          image: element.product.image,
-          price: element.product.price,
-        });
-      });
-      res.send(orderdetails);
+      console.log(data)
+    
+      res.status(200).send(data);
     })
     .catch((err) => {
       console.log(err);
