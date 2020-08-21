@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const Product = require("../Model/prodectModal");
+const Product = require("../Model/productModal");
 
 let date_ob = new Date();
 let date = ("0" + date_ob.getDate()).slice(-2);

@@ -1,9 +1,7 @@
 const mongoose = require("mongoose");
-const jwt = require("jsonwebtoken");
-const bcrypt = require("bcryptjs");
 const Schema = mongoose.Schema;
 
-const userSchema = new Schema({
+const productSchema = new Schema({
   name: String,
   brand: String,
   price: String,
@@ -13,5 +11,5 @@ const userSchema = new Schema({
   img: String,
 });
 
-const User = mongoose.model("User", userSchema);
-module.exports = User;
+const Product = mongoose.model("Product", productSchema);
+module.exports = Product;
