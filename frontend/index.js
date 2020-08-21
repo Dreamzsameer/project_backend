@@ -130,6 +130,7 @@ $(document).ready(function () {
       data: {
         productname: name,
         brand: brand,
+        category: category,
         price: price,
         description: desc,
         warrenty: warrenty,
