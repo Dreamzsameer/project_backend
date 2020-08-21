@@ -4,6 +4,8 @@ const app = express();
 const cors = require("cors");
 const db = require("./System/db");
 const morgan = require("morgan");
+const multer = require('multer')
+const path= require('path')
 
 app.use(cors());
 app.use(morgan("dev"));
@@ -21,6 +23,39 @@ const feedbackRoute = require("./Controller/feedbackController");
 const cartRoute = require("./Controller/cartController");
 const orderRoute = require("./Controller/orderController");
 const newsRoute = require("./Controller/newsController");
+
+
+var ImagefileName = '';
+var storage = multer.diskStorage({
+    destination: 'assets/images',
+    filename: function (req, file, callback) {
+        const extension = path.extname(file.originalname);
+        ImagefileName = file.fieldname + Date.now() + extension;
+        callback(null, ImagefileName);
+    }
+});
+
+var imageFileFilter = (req, file, cb) => {
+    if (!file.originalname.match(/\.(jpg|jpeg|png|gif)$/)) {
+        return cb(new Error("You can upload only image files!"), false);
+    }
+    cb(null, true);
+};
+var upload = multer({
+    storage: storage,
+    fileFilter: imageFileFilter,
+    limits: {
+        fileSize: 1000000000
+    }
+});
+
+app.post('/upload/user/image', upload.single('image'), function (req, res) {
+    res.writeHead(200, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify({
+        image: ImagefileName
+    }, null, 3));
+}
+)
 
 app.use("/upload", fileUploadRoute);
 app.use("/user", userRoute);

@@ -2,6 +2,8 @@
 const express = require("express");
 const router = express.Router();
 const User = require("../Model/userModal");
+const { ObjectId } = require('mongodb')
+
 
 router.post("/register", (req, res) => {
   console.log(req.body);
@@ -17,6 +19,7 @@ router.post("/register", (req, res) => {
           mobile: req.body.mobile,
           password: req.body.password,
           address: req.body.address,
+          image:""
         });
 
         user
@@ -38,25 +41,11 @@ router.post("/login", function (req, res) {
   var email = req.body.email;
   var password = req.body.password;
 
-  console.log(email);
 
   User.findOne({ email: email, password: password })
     .then((result) => {
       if (result != null || result != "") {
-        // var data = {
-        //   _id: result._id,
-        //   fullname: result.fullname,
-        //   email: result.email,
-        //   mobile: result.mobile,
-        //   address: result.address,
-        // };
-        res.status(201).json({
-          _id: result._id,
-          fullname: result.fullname,
-          email: result.email,
-          mobile: result.mobile,
-          address: result.address,
-        });
+        res.status(201).send(result);
       } else {
         res.status(500).json({
           message: "Invalid Login",
@@ -70,13 +59,33 @@ router.post("/login", function (req, res) {
     });
 });
 
-router.put("/update/:uid", (req, res) => {
-  console.log(req.body);
-  User.findByIdAndUpdate(req.params.uid, req.body, { new: true }, () => {
-    res.status(201).json({
-      message: "User updated",
-    });
-  });
+router.post("/update", (req, res) => {
+  var fullname = req.body.fullname;
+  var email = req.body.email;
+  var mobile = req.body.mobile;
+  var uid = req.body._id;
+  var image = req.body.image
+  var address= req.body.address
+
+  console.log(req.body)
+
+  User.findByIdAndUpdate({ _id: new ObjectId(uid) }, {
+    $set: {
+      fullname: fullname,
+      email: email,
+      mobile: mobile,
+      address:address,
+      image: image
+    }
+  }).then(() => {
+    res.status(200).json({
+      message: 'Updated'
+    })
+  }).catch(() => {
+    res.status(500).json({
+      message: 'Not updated'
+    })
+  })
 });
 
 module.exports = router;

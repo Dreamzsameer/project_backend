@@ -7,8 +7,7 @@ const userSchema = new Schema({
   mobile: String,
   password: String,
   address: String,
-  feedback: [{ type: Schema.Types.ObjectId, ref: "Feedback" }],
-  product: [{ type: Schema.Types.ObjectId, ref: "Product" }],
+  image: String
 });
 
 const User = mongoose.model("User", userSchema);
