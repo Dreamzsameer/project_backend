@@ -1,7 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const Product = require("../Model/productModal");
-
+const Payment = require("../Model/paymentModal");
 
 let date_ob = new Date();
 let date = ("0" + date_ob.getDate()).slice(-2);
@@ -10,27 +9,24 @@ let year = date_ob.getFullYear();
 var current_time = year + "-" + month + "-" + date;
 
 router.post("/add", (req, res) => {
-  const product = new Product({
-    name: req.body.name,
-    brand: req.body.brand,
-    price: req.body.price,
-    added_date: current_time,
-    desc: req.body.desc,
-    warrenty: req.body.warrenty,
-    img: req.body.img,
+  const payment = new Payment({
+    user_id: req.body.user_id,
+    product_id: req.body.product_id,
+    amount: req.body.amount,
+    date_time: current_time,
   });
 
-  product
+  payment
     .save()
     .then((result) => {
       res.status(201).json({
-        message: "Product added successfully",
+        message: "Payment successfully",
       });
     })
     .catch((err) => {
       console.log(err);
       res.status(500).json({
-        message: "Error adding product",
+        message: "Error making payment",
       });
     });
 });
@@ -42,7 +38,7 @@ router.get("/get", (req, res) => {
     })
     .catch((err) => {
       res.status(500).json({
-        message: "Error displaying product",
+        message: "Error displaying payment history",
       });
     });
 });
@@ -54,26 +50,8 @@ router.get("/get/:id", (req, res) => {
       res.send(data);
     })
     .catch((err) => {
-      res.send(err);
-    });
-});
-
-router.put("/update", (req, res) => {
-  console.log(req.body);
-  Product.findByIdAndUpdate(req.body._id, req.body, { new: true }, () => {
-    res.send("Product updated");
-  });
-});
-
-router.delete("/delete/:id", (req, res) => {
-  Product.findByIdAndDelete(req.params.id)
-    .then(() => {
-      console.log("Product removed");
-      res.send(true);
-    })
-    .catch(() => {
       res.status(500).json({
-        message: "Error deleting product",
+        message: "Error displaying payment history",
       });
     });
 });
