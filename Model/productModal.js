@@ -10,7 +10,6 @@ const productSchema = new Schema({
   description: String,
   warrenty: Number,
   image: String,
-  feedback: [{ type: Schema.Types.ObjectId, ref: "Feedback" }],
 });
 
 const Product = mongoose.model("Product", productSchema);

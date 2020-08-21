@@ -36,10 +36,14 @@ const upload = multer({
 
 router.post("/upload", upload.single("image"), (req, res) => {
   console.log("/upload: " + ImageToSend);
-  image = ImageToSend;
+  
+  res.send(JSON.stringify({
+    image:ImageToSend
+  }))
 });
 
 router.post("/add", (req, res) => {
+  console.log(req.body)
   const product = new Product({
     productname: req.body.productname,
     brand: req.body.brand,
@@ -88,6 +92,19 @@ router.get("/get/:id", (req, res) => {
       res.send(err);
     });
 });
+
+
+router.get("/get/category/:category", (req, res) => {
+  category = req.params.category.toString();
+  Product.find({category: category})
+    .then((data) => {
+      res.send(data);
+    })
+    .catch((err) => {
+      res.send(err);
+    });
+});
+
 
 router.put("/update", (req, res) => {
   console.log(req.body);

@@ -18,7 +18,10 @@ $(document).ready(function () {
       processData: false,
       data: form_data,
       success: function (data) {
-        ImageName = JSON.parse(data);
+        imageData= JSON.parse(data)
+        ImageName=imageData.image
+        console.log(ImageName)
+        $("#imagename").val(ImageName);
       },
       error: function (xhr, textStatus, errorThrown) {
         console.log("Error in Operation");
@@ -117,6 +120,8 @@ $(document).ready(function () {
     price = $("#price").val();
     desc = $("#desc").val();
     warrenty = $("#warrenty").val();
+    image= $("#imagename").val();
+
 
     $.ajax({
       url: "http://localhost:8080/product/add",
@@ -128,6 +133,8 @@ $(document).ready(function () {
         price: price,
         description: desc,
         warrenty: warrenty,
+        category:category,
+        image:image
       },
       success: function (res, textStatus, xhr) {
         if (res.message == true) {
