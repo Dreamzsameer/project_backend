@@ -21,11 +21,14 @@ router.post("/register", (req, res) => {
         user
           .save()
           .then((success) => {
-            res.json({
+            res.status(201).json({
               message: true,
             });
           })
-          .catch((err) => console.log(err));
+          .catch((err) => {
+            res.status(500).json({ message: "Error" });
+            console.log(err);
+          });
       }
     });
 });
@@ -41,7 +44,7 @@ router.post("/login", function (req, res) {
       }
     })
     .catch((err) => {
-      res.status(201).json({
+      res.status(500).json({
         message: "Invalid Login",
       });
     });
