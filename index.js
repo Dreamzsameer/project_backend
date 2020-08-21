@@ -11,8 +11,10 @@ app.use("/assets/images", express.static("assets/images"));
 app.use(cors());
 const userRoute = require("./Controller/userController");
 const productRoute = require("./Controller/productController");
+const fileUploadRoute = require("./Controller/imageUploadController");
 
 app.use("/user", userRoute);
 app.use("/product", productRoute);
+app.use("/upload", fileUploadRoute);
 
 module.exports = app;
