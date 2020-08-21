@@ -35,8 +35,6 @@ router.post("/login", function (req, res) {
 
   if (users != null) {
     const token = await users.generateAuthToken();
-    console.log(token);
-    console.log(users);
     res.json({
       token: token,
       users: users,
