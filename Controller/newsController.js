@@ -12,7 +12,6 @@ router.post("/add", (req, res) => {
   console.log(req.body);
   const news = new News({
     heading: req.body.heading,
-    image: req.body.image,
     description: req.body.description,
     date: currenttime,
   });
