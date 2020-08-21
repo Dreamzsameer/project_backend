@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 
 const newsSchema = new Schema({
   heading: String,
-  description: Number,
+  description: String,
   date: String,
 });
 

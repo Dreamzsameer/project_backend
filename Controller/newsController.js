@@ -34,7 +34,7 @@ router.post("/add", (req, res) => {
 router.get("/get", (req, res) => {
   News.find()
     .then(function (data) {
-      res.send(data);
+      res.status(200).send(data);
     })
     .catch((err) => {
       res.status(500).json({
