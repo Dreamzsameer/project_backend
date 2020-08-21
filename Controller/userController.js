@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const auth = require("../System/authentication");
-const User = require("../Model/userModel");
+const User = require("../Model/userModal");
 
 router.post("/register", (req, res) => {
   User.find({ email: req.body.email })
@@ -22,7 +22,7 @@ router.post("/register", (req, res) => {
           .save()
           .then((success) => {
             res.status(201).json({
-              message: true,
+              message: "User registered successfully",
             });
           })
           .catch((err) => {
