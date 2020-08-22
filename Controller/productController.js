@@ -7,9 +7,39 @@ let date = ("0" + dateob.getDate()).slice(-2);
 let month = ("0" + (dateob.getMonth() + 1)).slice(-2);
 let year = dateob.getFullYear();
 var currenttime = year + "-" + month + "-" + date;
+const multer = require("multer");
+const path = require("path");
+var image;
+var ImageToSend;
+
+var storage = multer.diskStorage({
+  destination: "./assets/images",
+  filename: function (req, file, callback) {
+    const ext = path.extname(file.originalname);
+    ImageToSend = file.fieldname + Date.now() + ext;
+    image = ImageToSend;
+    callback(null, ImageToSend);
+  },
+});
+
+const imageFileFilter = (req, file, cb) => {
+  if (!file.originalname.toLowerCase().match(/\.(jpg|jpeg|png|gif)$/)) {
+    return cb(new Error("You can upload only image files!"), false);
+  }
+  cb(null, true);
+};
+
+const upload = multer({
+  storage: storage,
+  fileFilter: imageFileFilter,
+});
+
+router.post("/upload", upload.single("image"), (req, res) => {
+  console.log("/upload: " + ImageToSend);
+  image = ImageToSend;
+});
 
 router.post("/add", (req, res) => {
-  console.log(req.body);
   const product = new Product({
     productname: req.body.productname,
     brand: req.body.brand,
@@ -17,7 +47,7 @@ router.post("/add", (req, res) => {
     date: currenttime,
     description: req.body.description,
     warrenty: req.body.warrenty,
-    image: req.body.image,
+    image: ImageToSend,
   });
 
   product

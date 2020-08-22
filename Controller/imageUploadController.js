@@ -30,11 +30,7 @@ const upload = multer({
 
 uploadRouter.route("/image").post(upload.single("image"), (req, res) => {
   console.log("/upload: " + ImageToSend);
-  res.end(
-    JSON.stringify({
-      image: ImageToSend,
-    })
-  );
+  res.end(ImageToSend);
 });
 
 module.exports = uploadRouter;
