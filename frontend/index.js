@@ -29,6 +29,30 @@ $(document).ready(function () {
       },
     });
   });
+  $("#btn_login").click(function (e) {
+    email = $("#lemail").val();
+    password = $("#lpassword").val();
+
+    $.ajax({
+      url: "http://localhost:8080/user/login",
+      type: "POST",
+      dataType: "json",
+      data: {
+        email: email,
+        password: password,
+      },
+      success: function (res, textStatus, xhr) {
+        if (res.message == true) {
+          alert("You are successfully login.\nPlease register to proceed");
+        } else {
+          alert(res.message);
+        }
+      },
+      error: function (xhr, textStatus, errorThrown) {
+        alert(errorThrown);
+      },
+    });
+  });
 
   $("#btn_feedback").click(function (e) {
     user_id = $("#user_id").val();
