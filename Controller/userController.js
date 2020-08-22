@@ -43,16 +43,22 @@ router.post("/login", function (req, res) {
   User.findOne({ email: email, password: password })
     .then((result) => {
       if (result != null || result != "") {
-        var data = {
-          _id: result._id,
-          fullname: result.fullname,
-          email: result.email,
-          mobile: result.mobile,
-          address: result.address,
-        };
-        res.status(201).json({
-          data,
-        });
+        // var data = {
+        //   _id: result._id,
+        //   fullname: result.fullname,
+        //   email: result.email,
+        //   mobile: result.mobile,
+        //   address: result.address,
+        // };
+        res.status(201).json([
+          {
+            _id: result._id,
+            fullname: result.fullname,
+            email: result.email,
+            mobile: result.mobile,
+            address: result.address,
+          },
+        ]);
       } else {
         res.status(500).json({
           message: "Invalid Login",
