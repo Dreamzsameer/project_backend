@@ -15,9 +15,9 @@ router.post("/add", (req, res) => {
     brand: req.body.brand,
     price: req.body.price,
     date: currenttime,
-    description: req.body.desc,
+    description: req.body.description,
     warrenty: req.body.warrenty,
-    image: req.body.img,
+    image: req.body.image,
   });
 
   product

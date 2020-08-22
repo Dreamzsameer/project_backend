@@ -75,7 +75,7 @@ $(document).ready(function () {
         productname: name,
         brand: brand,
         price: price,
-        desc: desc,
+        description: desc,
         warrenty: warrenty,
         image: img,
       },
