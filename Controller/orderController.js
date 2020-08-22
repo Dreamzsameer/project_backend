@@ -4,10 +4,11 @@ const Order = require("../Model/orderModal");
 
 router.post("/add", (req, res) => {
   const order = new Order({
-    userid: req.body.userid,
-    productid: req.body.productid,
+    user: req.body.userid,
+    product: req.body.productid,
+    payment: false,
   });
-
+  console.log(order);
   order
     .save()
     .then((result) => {
@@ -24,13 +25,24 @@ router.post("/add", (req, res) => {
 });
 
 router.get("/get/:userid", (req, res) => {
+  var orderdetails = [];
   id = req.params.userid.toString();
-  Product.findById(id)
-    .populate("feedback")
+  Order.find({ user: id })
+    .populate("product")
     .then((data) => {
-      res.send(data);
+      console.log(data);
+      data.forEach((element) => {
+        orderdetails.push({
+          orderid: element._id,
+          productname: element.product.productname,
+          image: element.product.image,
+          price: element.product.price,
+        });
+      });
+      res.send(orderdetails);
     })
     .catch((err) => {
+      console.log(err);
       res.status(500).json({
         message: "Error displaying order history",
       });
