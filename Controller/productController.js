@@ -2,7 +2,6 @@ const express = require("express");
 const router = express.Router();
 const Product = require("../Model/productModal");
 
-
 let date_ob = new Date();
 let date = ("0" + date_ob.getDate()).slice(-2);
 let month = ("0" + (date_ob.getMonth() + 1)).slice(-2);
@@ -10,6 +9,7 @@ let year = date_ob.getFullYear();
 var current_time = year + "-" + month + "-" + date;
 
 router.post("/add", (req, res) => {
+  console.log(req.body);
   const product = new Product({
     name: req.body.name,
     brand: req.body.brand,

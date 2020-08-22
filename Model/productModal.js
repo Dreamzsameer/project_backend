@@ -9,6 +9,7 @@ const productSchema = new Schema({
   desc: String,
   warrenty: Boolean,
   img: String,
+  feedback: [{ type: Schema.Types.ObjectId, ref: "Feedback" }],
 });
 
 const Product = mongoose.model("Product", productSchema);

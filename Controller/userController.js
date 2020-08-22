@@ -1,9 +1,10 @@
+"use strict";
 const express = require("express");
 const router = express.Router();
-const auth = require("../System/authentication");
 const User = require("../Model/userModal");
 
 router.post("/register", (req, res) => {
+  console.log(req.body);
   User.find({ email: req.body.email })
     .exec()
     .then((userData) => {
