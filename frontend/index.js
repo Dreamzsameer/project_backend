@@ -11,9 +11,9 @@ $(document).ready(function () {
       type: "POST",
       dataType: "json",
       data: {
-        name: name,
+        fullname: name,
         email: email,
-        contact: contact,
+        mobile: contact,
         password: password,
         address: address,
       },
@@ -41,8 +41,8 @@ $(document).ready(function () {
       type: "POST",
       dataType: "json",
       data: {
-        user_id: user_id,
-        product_id: product_id,
+        userid: user_id,
+        productid: product_id,
         feedback: feedback,
         rating: rating,
       },
@@ -72,16 +72,64 @@ $(document).ready(function () {
       type: "POST",
       dataType: "json",
       data: {
-        name: name,
+        productname: name,
         brand: brand,
         price: price,
         desc: desc,
         warrenty: warrenty,
-        img: img,
+        image: img,
       },
       success: function (res, textStatus, xhr) {
         if (res.message == true) {
           alert("You are successfully registered feedbak");
+        } else {
+          alert(res.message);
+        }
+      },
+      error: function (xhr, textStatus, errorThrown) {
+        alert(errorThrown);
+      },
+    });
+  });
+  $("#btn_order").click(function (e) {
+    userid = $("#user_id").val();
+    productid = $("#product_id").val();
+
+    $.ajax({
+      url: "http://localhost:8080/order/add",
+      type: "POST",
+      dataType: "json",
+      data: {
+        userid: userid,
+        productid: productid,
+      },
+      success: function (res, textStatus, xhr) {
+        if (res.message == true) {
+          alert("You are successfully registered order");
+        } else {
+          alert(res.message);
+        }
+      },
+      error: function (xhr, textStatus, errorThrown) {
+        alert(errorThrown);
+      },
+    });
+  });
+  $("#btn_cart").click(function (e) {
+    userid = $("#cuser_id").val();
+    productid = $("#cproduct_id").val();
+
+    $.ajax({
+      url: "http://localhost:8080/cart/add",
+      type: "POST",
+      dataType: "json",
+      data: {
+        userid: userid,
+        productid: productid,
+      },
+      success: function (res, textStatus, xhr) {
+        if (res.message == true) {
+          alert("You are successfully registered cart");
         } else {
           alert(res.message);
         }

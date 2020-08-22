@@ -2,9 +2,9 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
-  name: String,
+  fullname: String,
   email: String,
-  contact: String,
+  mobile: String,
   password: String,
   address: String,
   feedback: [{ type: Schema.Types.ObjectId, ref: "Feedback" }],

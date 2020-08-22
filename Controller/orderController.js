@@ -2,18 +2,10 @@ const express = require("express");
 const router = express.Router();
 const Order = require("../Model/orderModal");
 
-let date_ob = new Date();
-let date = ("0" + date_ob.getDate()).slice(-2);
-let month = ("0" + (date_ob.getMonth() + 1)).slice(-2);
-let year = date_ob.getFullYear();
-var current_time = year + "-" + month + "-" + date;
-
 router.post("/add", (req, res) => {
   const order = new Order({
-    user_id: req.body.user_id,
-    product_id: req.body.product_id,
-    amount: req.body.amount,
-    date_time: current_time,
+    userid: req.body.userid,
+    productid: req.body.productid,
   });
 
   order
@@ -31,9 +23,11 @@ router.post("/add", (req, res) => {
     });
 });
 
-router.get("/get", (req, res) => {
-  Product.find()
-    .then(function (data) {
+router.get("/get/:userid", (req, res) => {
+  id = req.params.userid.toString();
+  Product.findById(id)
+    .populate("feedback")
+    .then((data) => {
       res.send(data);
     })
     .catch((err) => {
@@ -43,16 +37,22 @@ router.get("/get", (req, res) => {
     });
 });
 
-router.get("/get/:id", (req, res) => {
-  p_id = req.params.id.toString();
-  Product.findById(p_id)
-    .populate("feedback")
-    .then((data) => {
-      res.send(data);
+router.put("/payment", (req, res) => {
+  Order.findByIdAndUpdate(req.body.id, { payment: true }, { new: true }, () => {
+    res.send("Payment made");
+  });
+});
+
+router.delete("/delete/:orderid", (req, res) => {
+  Order.findByIdAndDelete(req.params.orderid)
+    .then(() => {
+      res.status(201).json({
+        message: "Order removed",
+      });
     })
-    .catch((err) => {
+    .catch(() => {
       res.status(500).json({
-        message: "Error displaying order history",
+        message: "Error deleting Order",
       });
     });
 });
