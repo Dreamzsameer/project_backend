@@ -4,11 +4,11 @@ const Schema = mongoose.Schema;
 const productSchema = new Schema({
   name: String,
   brand: String,
-  price: String,
-  added_date: String,
-  desc: String,
-  warrenty: Boolean,
-  img: String,
+  price: Number,
+  Date: String,
+  description: String,
+  warrenty: Number,
+  image: String,
   feedback: [{ type: Schema.Types.ObjectId, ref: "Feedback" }],
 });
 

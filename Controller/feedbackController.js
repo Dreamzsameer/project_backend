@@ -77,8 +77,8 @@ router.get("/get", (req, res) => {
     });
 });
 
-router.get("/get/:id", (req, res) => {
-  p_id = req.params.id.toString();
+router.get("/get/:productid", (req, res) => {
+  p_id = req.params.productid.toString();
   var returnData = [];
   Feedback.find({ product: p_id })
     .populate("user")
