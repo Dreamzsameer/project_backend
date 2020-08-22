@@ -18,12 +18,12 @@ const fileUploadRoute = require("./Controller/imageUploadController");
 const userRoute = require("./Controller/userController");
 const productRoute = require("./Controller/productController");
 const feedbackRoute = require("./Controller/feedbackController");
-const paymentRoute = require("./Controller/paymentController");
+const orderRoute = require("./Controller/orderController");
 
 app.use("/upload", fileUploadRoute);
 app.use("/user", userRoute);
 app.use("/product", productRoute);
 app.use("/feedback", feedbackRoute);
-app.use("/payment", paymentRoute);
+app.use("/order", orderRoute);
 
 module.exports = app;

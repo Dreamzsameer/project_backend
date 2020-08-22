@@ -33,7 +33,8 @@ $(document).ready(function () {
   $("#btn_feedback").click(function (e) {
     user_id = $("#user_id").val();
     product_id = $("#product_id").val();
-    amount = $("#amount").val();
+    feedback = $("#feedback").val();
+    rating = $("#rating").val();
 
     $.ajax({
       url: "http://localhost:8080/feedback/add",
@@ -42,7 +43,8 @@ $(document).ready(function () {
       data: {
         user_id: user_id,
         product_id: product_id,
-        amount: amount,
+        feedback: feedback,
+        rating: rating,
       },
       success: function (res, textStatus, xhr) {
         if (res.message == true) {

@@ -4,7 +4,8 @@ const Schema = mongoose.Schema;
 const FeedbackSchema = new Schema({
   user: { type: Schema.Types.ObjectId, ref: "User" },
   product: { type: Schema.Types.ObjectId, ref: "Product" },
-  amount: String,
+  feedback: String,
+  rating: String,
   date_time: Date,
 });
 

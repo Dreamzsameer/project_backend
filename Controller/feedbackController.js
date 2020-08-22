@@ -36,7 +36,8 @@ router.post("/add", async (req, res) => {
   const feedback = new Feedback({
     user: req.body.user_id,
     product: req.body.product_id,
-    amount: req.body.amount,
+    feedback: req.body.feedback,
+    rating: req.body.rating,
     date_time: current_time,
   });
   const user = new User();
@@ -58,31 +59,44 @@ router.post("/add", async (req, res) => {
 });
 
 router.get("/get", (req, res) => {
+  var returnData = [];
   Feedback.find()
     .populate("user")
     .populate("product")
     .then(function (data) {
-      var returnData = {};
       data.forEach((element) => {
-        console.log(element);
+        console.log(element.product.name);
+        returnData.push({
+          id: element._id,
+          user_name: element.user.name,
+          feedback: element.feedback,
+          rating: element.user.rating,
+        });
       });
-      res.send(data);
+      res.send(returnData);
     });
 });
 
 router.get("/get/:id", (req, res) => {
   p_id = req.params.id.toString();
+  var returnData = [];
   Feedback.find({ product: p_id })
     .populate("user")
     .populate("product")
     .then(function (data) {
-      console.log(data);
-      var returnData = {
-        // user_name:data
-      };
-      res.send(data);
+      data.forEach((element) => {
+        returnData.push({
+          id: data._id,
+          user_name: element.user.name,
+          feedback: element.feedback,
+          rating: element.rating,
+        });
+      });
+
+      res.send(returnData);
     })
     .catch((err) => {
+      console.log(err);
       res.status(500).json({
         message: "Error displaying feedback",
       });
