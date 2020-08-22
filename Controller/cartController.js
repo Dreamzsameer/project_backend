@@ -63,5 +63,17 @@ router.get("/get/:userid", (req, res) => {
       });
     });
 });
-
+router.delete("/delete/:cartid", (req, res) => {
+  Cart.findByIdAndDelete(req.params.cartid)
+    .then(() => {
+      res.status(201).json({
+        message: "cart removed",
+      });
+    })
+    .catch(() => {
+      res.status(500).json({
+        message: "Error deleting cart",
+      });
+    });
+});
 module.exports = router;
