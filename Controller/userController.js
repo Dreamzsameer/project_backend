@@ -23,11 +23,11 @@ router.post("/register", (req, res) => {
           .save()
           .then((success) => {
             res.status(201).json({
-              success:true
+              success: true,
             });
           })
           .catch((err) => {
-            res.status(500).json({ success:false });
+            res.status(500).json({ success: false });
             console.log(err);
           });
       }
@@ -50,15 +50,13 @@ router.post("/login", function (req, res) {
         //   mobile: result.mobile,
         //   address: result.address,
         // };
-        res.status(201).json(
-          {
-            _id: result._id,
-            fullname: result.fullname,
-            email: result.email,
-            mobile: result.mobile,
-            address: result.address,
-          },
-        );
+        res.status(201).json({
+          _id: result._id,
+          fullname: result.fullname,
+          email: result.email,
+          mobile: result.mobile,
+          address: result.address,
+        });
       } else {
         res.status(500).json({
           message: "Invalid Login",
@@ -70,6 +68,15 @@ router.post("/login", function (req, res) {
         message: "Invalid Login",
       });
     });
+});
+
+router.put("/update/:uid", (req, res) => {
+  console.log(req.body);
+  User.findByIdAndUpdate(req.params.uid, req.body, { new: true }, () => {
+    res.status(201).json({
+      message: "User updated",
+    });
+  });
 });
 
 module.exports = router;
