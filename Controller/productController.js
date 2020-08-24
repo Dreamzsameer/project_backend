@@ -43,6 +43,7 @@ router.post("/add", (req, res) => {
   const product = new Product({
     productname: req.body.productname,
     brand: req.body.brand,
+    category: req.body.category,
     price: req.body.price,
     date: currenttime,
     description: req.body.description,

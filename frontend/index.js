@@ -113,6 +113,7 @@ $(document).ready(function () {
   $("#btn_product").click(function (e) {
     name = $("#pname").val();
     brand = $("#brand").val();
+    category = $("#category").val();
     price = $("#price").val();
     desc = $("#desc").val();
     warrenty = $("#warrenty").val();
